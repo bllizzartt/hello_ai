@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyers R Us</title>
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
 </head>
 <body>
-
-    <div class="intro">
-        Hello World!
-    </div>
-    
-
-
-
-
+    <header>
+        <div class="logo">
+            <h1>My E-Commerce Store</h1>
+        </div>
+        <div class="search-container">
+            <input type="search" id="productSearch" placeholder="Search products...">
+        </div>
+    </header>        
+    <main>
+        <div class="product" onclick="productClicked('Product 1')">
+            <img src="./img/airmax.jpeg" alt="Product 1">
+            <h2>Product 1</h2>
+            <p>$19.99</p>
+        </div>
+        <!-- Repeat the above div block for each product you want to display -->
+    </main>
+    <footer>
+        <p>© 2024 My E-Commerce Store. All rights reserved.</p>
+    </footer>
     <script src="script.js"></script>
 </body>
 </html>
