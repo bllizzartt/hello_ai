@@ -1,11 +1,111 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello, Web</title>
-  </head>
-  <body>
-    <h1>Hello, Web!</h1>
-    <p>This static html page was served by hello_web.js</p>
-  </body>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Shopping!</title>
+    
+</head>
+
+<body>
+
+    <div class="fullscreen-bg">
+        <video class="fullscreen-bg__video" autoplay loop muted>
+            <source src="pixel.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="contact-number">
+        Contact Chase: 571-422-8961 or message me on <a href="https://www.instagram.com/haynes2va/">Instagram</a>
+        <br>
+        All prices negotiable!
+    </div>
+
+    <div class="container" id="productContainer"></div>
+
+    <div id="imageModal" style="display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; background-color: rgba(0,0,0,0.5); align-items:center; justify-content:center;">
+        <img id="modalImage" src="" style="max-width:90%; max-height:90%; margin:auto; display:block;">
+    </div>
+
+    <div id="entranceWall" class="entrance-wall">
+        <div class="modal-content">
+            <p>Do not hesitate to ask me any questions you have!</p>
+            <p>Are you ready to shop?</p>
+            <button id="yesButton">Yes</button>
+        </div>
+    </div>
+    
+    <audio id="backgroundMusic" preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+
+    <script>
+        // Define your products here
+        const products = [
+            { imgSrc: "./img/oculus.jpg", alt: "Product 1", info: "Oculus Quest 2", price: "$149" },
+            { imgSrc: "./img/screens.jpg", alt: "Product 2", info: "ASUS 23.8” 1080P 165Hz 1ms Gaming Monitor with FreeSync - TUF Gaming VG247Q1A", price: "$99" },
+            { imgSrc: "./img/scarlett.jpg", alt: "Product 3", info: "Focusrite Scarlett 8i6 3rd Gen USB Audio Interface", price: "$199" },
+            { imgSrc: "./img/printer.jpg", alt: "Product 4", info: "Canon PIXMA TS9520", price: "$199" },
+            { imgSrc: "./img/safe.jpg", alt: "Product 5", info: "Amazon Basics Steel Security Safe and Lock Box with Electronic Keypad", price: "$59" },
+            { imgSrc: "./img/rice.jpg", alt: "Product 6", info: "COMFEE' Rice Cooker, Japanese Large Rice Cooker with Fuzzy Logic Technology", price: "$79" },
+            { imgSrc: "./img/blender.jpg", alt: "Product 7", info: "Ninja BL660 Professional Compact Smoothie & Food Processing Blender", price: "$89" },
+            { imgSrc: "./img/scale.jpg", alt: "Product 8", info: "Scale", price: "$15" },
+            { imgSrc: "./img/books.jpg", alt: "Product 9", info: "Book Collection", price: "Price Varies" },
+            { imgSrc: "./img/screens.jpg", alt: "Product 10", info: "VIVO Quad Monitor Adjustable Heavy Duty Mount, Articulating Stand for 4 LCD Screens", price: "$49" },
+            { imgSrc: "./img/mirror.jpg", alt: "Product 11", info: "HOVET Mirror, aluminum, 30 3/4x77 1/8", price: "$99" },
+            // { imgSrc: "test.jpg", alt: "Product 12", info: "Misc Technology", price: "Price Varies" },
+            { imgSrc: "./img/surf.jpg", alt: "Product 13", info: "Surfboard/suit", price: "$499" },
+            { imgSrc: "./img/snow.jpg", alt: "Product 14", info: " Burton Snowboard + bindings", price: "$149" },
+            { imgSrc: "./img/speaker.jpg", alt: "Product 15", info: "Yamaha HS7 100-Watt Series Monitor, Black, 6.5\" (pair)", price: "$499" },
+            { imgSrc: "./img/mx49.jpg", alt: "Product 16", info: "Yamaha MX49 49-Key Keyboard Production Station", price: "$199" },
+            // { imgSrc: "test.jpg", alt: "Product 17", info: "Kitchen ware", price: "Price Varies" },
+            // { imgSrc: "test.jpg", alt: "Product 18", info: "Misc Clothing", price: "Price Varies" },
+            { imgSrc: "./img/mic.jpg", alt: "Product 19", info: "Shure SM7B Vocal Dynamic Microphone for Broadcast, Podcast & Recording, XLR Studio Mic for Music & Speech, Wide-Range Frequency, Warm & Smooth Sound, Rugged Construction, Detachable Windscreen - Black", price: "$249" },
+            { imgSrc: "./img/cloud.jpg", alt: "Product 20", info: "Cloud Microphones - Cloudlifter CL-1 Mic Activator - Ultra-Clean Microphone Preamp Gain - USA Made", price: "$99" },
+            { imgSrc: "./img/water.jpg", alt: "Product 21", info: "SimPure Y7P-BW UV Countertop Reverse Osmosis Water Filtration Purification System, 4 Stage RO Water Filter, Bottleless Water Dispenser, 4: 1 Pure to Drain, BPA Free (No Installation Required)", price: "$249" },
+            { imgSrc: "./img/tv.jpg", alt: "Product 22", info: "Samsung TV", price: "$99" },
+            { imgSrc: "./img/plant.jpg", alt: "Product 23", info: "Plant", price: "$75" },
+            { imgSrc: "./img/plant1.jpg", alt: "Product 24", info: "Plant", price: "$99" },
+            { imgSrc: "./img/plant2.jpg", alt: "Product 25", info: "Plant", price: "$99" },
+            { imgSrc: "./img/plant3.jpg", alt: "Product 26", info: "Plant", price: "$45" },
+            { imgSrc: "./img/plant4.jpg", alt: "Product 27", info: "Plant", price: "$45" },
+            { imgSrc: "./img/plant5.jpg", alt: "Product 28", info: "Plant", price: "$99" },
+            // Add more product objects here if needed
+        ];
+
+        // Function to generate HTML for a product
+        function createProductHTML(product) {
+            return `<div class="product">
+                        <img src="${product.imgSrc}" alt="${product.alt}" onclick="showImage('${product.imgSrc}')">
+                        <div class="product-info">${product.info}</div>
+                        <div class="product-price">${product.price}</div>
+                    </div>`;
+        }
+
+        // Select the container where products will be displayed
+        var container = document.getElementById('productContainer');
+
+        // Loop through the products and append them to the container
+        products.forEach(function(product) {
+            container.innerHTML += createProductHTML(product);
+        });
+
+        function showImage(src) {
+            document.getElementById('modalImage').src = src;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+
+        function hideImage() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        document.getElementById('imageModal').addEventListener('click', hideImage);
+    </script>
+    <script src="script.js"></script>
+
+</body>
 </html>

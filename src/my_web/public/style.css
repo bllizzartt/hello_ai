@@ -1,0 +1,9 @@
+.intro {
+    text-align: center;
+    margin-top: 20px;
+    background-color: white;
+    padding: 10px;
+    display: table; /* Another approach to make the background wrap the content */
+    margin-left: auto; /* Centers the block horizontally */
+    margin-right: auto;
+}
