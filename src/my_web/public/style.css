@@ -3,23 +3,48 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: column;
+    flex-direction: row; /* Changed to 'row' to accommodate the sidebar */
     min-height: 100vh;
+}
+
+.sidebar {
+    height: 100vh; /* Full viewport height */
+    width: 250px; /* Adjust width as necessary */
+    position: fixed;
+    left: 0;
+    top: 0;
+    overflow-y: auto; /* Enables vertical scrolling */
+    background-color: #ffffff; /* Light grey background */
+    padding: 20px;
+    box-sizing: border-box; /* Includes padding and borders in the element's total dimensions */
+}
+
+
+.category-list {
+    list-style-type: none; /* Removes bullet points from the list */
+    padding: 0;
+}
+
+.category-list li {
+    padding: 10px;
+    border-bottom: 1px solid #ffffff; /* Adds a light border between items */
 }
 
 header {
     display: flex;
-    justify-content: space-between; /* Align items to start and end of the header */
-    align-items: center; /* Center items vertically */
-    background-color: #f8f9fa;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
     padding: 20px;
+    width: calc(100% - 250px); /* Adjusts header width to account for sidebar */
+    margin-left: 250px; /* Pushes the header to the right to align with the main content */
 }
 
 .search-container {
-    /* If you need specific styles for the search container, add them here */
+    margin-right: 7%;
+    
 }
 
-/* Assuming you already have styles for the input, but you might want to adjust or add if needed */
 #productSearch {
     padding: 8px;
     font-size: 16px;
@@ -27,32 +52,44 @@ header {
     border-radius: 4px;
 }
 
+.logo {
+    margin-left: 50px;
+}
 
 main {
     flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    padding: 100px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columns of equal width */
+    grid-gap: 20px; /* Adjust the gap between items */
+    justify-content: center; /* Center grid items horizontally (if there's extra space) */
+    margin-left: 250px; /* Adjusts main content to not be hidden by the sidebar */
 }
 
 .product {
-    /* border: 1px solid #ddd; */
-    margin: 10px;
+    background-color: #ffffff;
+    text-align: left;
     padding: 10px;
-    width: calc(33.333% - 20px);
-    text-align: center;
-    cursor: pointer;
+    flex-direction: column;
+    align-items: center;
+    display: grid;
+    
 }
 
 .product img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
+    margin-bottom: 10px;
+}
+
+.text {
+    justify-self: start; /* Aligns the content inside the grid area to the start (left) */
 }
 
 footer {
     background-color: #f8f9fa;
     text-align: center;
     padding: 10px;
+    width: calc(100% - 250px); /* Adjusts footer width to account for sidebar */
+    margin-left: 250px; /* Aligns footer with the header and main content */
 }
-
