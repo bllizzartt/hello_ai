@@ -1,48 +1,58 @@
+/* Reset some default styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     display: flex;
-    flex-direction: row; /* Changed to 'row' to accommodate the sidebar */
+    flex-direction: row; /* Sidebar next to the content */
     min-height: 100vh;
 }
 
+/* Sidebar styles */
 .sidebar {
-    height: 100vh; /* Full viewport height */
+    height: 100vh;
     width: 250px; /* Adjust width as necessary */
     position: fixed;
     left: 0;
     top: 0;
-    overflow-y: auto; /* Enables vertical scrolling */
-    background-color: #ffffff; /* Light grey background */
+    overflow-y: auto; /* Enables vertical scrolling if content is tall */
+    background-color: #ffffff; /* Sidebar background color */
     padding: 20px;
-    box-sizing: border-box; /* Includes padding and borders in the element's total dimensions */
+    box-sizing: border-box; /* Padding and border included in the width */
 }
 
-
+/* Category list in the sidebar */
 .category-list {
-    list-style-type: none; /* Removes bullet points from the list */
+    list-style-type: none; /* No bullet points */
     padding: 0;
+    margin-top: 200px; /* Space at the top */
+}
+
+.category-list a {
+    display: block;
+    padding: 10px;
+    text-decoration: none; /* No underline */
+    color: inherit; /* Link color same as text color */
 }
 
 .category-list li {
-    padding: 10px;
-    border-bottom: 1px solid #ffffff; /* Adds a light border between items */
+    margin: 0; /* No space between list items */
+    padding: 0; /* Padding applied to <a> instead */
 }
 
+/* Header styles, adjusted to account for the sidebar */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #ffffff;
     padding: 20px;
-    width: calc(100% - 250px); /* Adjusts header width to account for sidebar */
-    margin-left: 250px; /* Pushes the header to the right to align with the main content */
+    width: calc(100% - 250px); /* Header width accounting for sidebar */
+    margin-left: 250px; /* Aligns header to the right */
 }
 
 .search-container {
     margin-right: 7%;
-    
 }
 
 #productSearch {
@@ -53,27 +63,25 @@ header {
 }
 
 .logo {
-    margin-left: 50px;
+    margin-left: 90px;
 }
 
+/* Main content area */
 main {
     flex: 1;
     padding: 100px;
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 columns of equal width */
-    grid-gap: 20px; /* Adjust the gap between items */
-    justify-content: center; /* Center grid items horizontally (if there's extra space) */
-    margin-left: 250px; /* Adjusts main content to not be hidden by the sidebar */
+    grid-template-columns: repeat(4, 1fr); /* Four equal columns */
+    grid-gap: 20px; /* Space between grid items */
+    justify-content: center;
+    margin-left: 250px; /* Prevents overlap with sidebar */
 }
 
 .product {
     background-color: #ffffff;
     text-align: left;
     padding: 10px;
-    flex-direction: column;
-    align-items: center;
     display: grid;
-    
 }
 
 .product img {
@@ -83,13 +91,84 @@ main {
 }
 
 .text {
-    justify-self: start; /* Aligns the content inside the grid area to the start (left) */
+    justify-self: start;
 }
 
+
+/* Base state for the chat container */
+.chat-container {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 60px; /* Circle state */
+    height: 60px; /* Circle state */
+    background-color: #007bff;
+    border-radius: 50%; /* Fully rounded for circle */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: width 0.4s ease, height 0.4s ease, border-radius 0.4s ease; /* Smooth transitions */
+    overflow: hidden; /* Ensures nothing overflows during transition */
+}
+
+/* Styles for the expanded state */
+.chat-container.chat-expanded {
+    width: 300px; /* Expanded state */
+    height: 400px; /* Expanded state */
+    border-radius: 15px; /* Less rounded corners for rectangle */
+    cursor: default;
+    flex-direction: column;
+}
+
+/* Ensures elements are shown only in the expanded state */
+.chat-container.chat-expanded .chat-box,
+.chat-container.chat-expanded #user-input,
+.chat-container.chat-expanded #send-btn {
+    display: block;
+}
+
+/* chat support */
+.chat-box, #user-input, #send-btn {
+    display: none; /* Hidden in collapsed (circle) state */
+}
+
+#chat-box {
+    width: 300px; /* Expanded state */
+    height: 400px; /* Expanded state */
+    /* flex-grow: 1;
+    overflow-y: auto; */
+    background-color: #f9f9f9; /* Slightly different background */
+    padding: 10px; /* Padding for content */
+}
+
+#chat-box div {
+    margin-bottom: 10px; /* Adjust as needed */
+    padding: 5px; /* Adds some padding around the text */
+    background-color: #f1f1f1; /* Light background color for visibility */
+    border-radius: 5px; /* Optional: adds rounded corners for a modern look */
+}
+
+
+#user-input, #send-btn {
+    width: calc(100% - 20px); /* Adjusts width for padding */
+    margin: 10px; /* Margin around input and button */
+}
+
+#send-btn {
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    padding: 10px;
+}
+
+
+/* Footer, also adjusted for the sidebar */
 footer {
     background-color: #f8f9fa;
     text-align: center;
     padding: 10px;
-    width: calc(100% - 250px); /* Adjusts footer width to account for sidebar */
-    margin-left: 250px; /* Aligns footer with the header and main content */
+    width: calc(100% - 250px); /* Footer width adjusted */
+    margin-left: 250px; /* Aligns with the rest of the content */
 }
