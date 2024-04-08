@@ -23,7 +23,7 @@ document.getElementById('send-btn').addEventListener('click', async function(eve
             appendMessage(response, 'bot');
         } catch (error) {
             console.error('Error sending message to API:', error);
-            appendMessage("Sorry, there was an error processing your message.", 'error');
+            appendMessage("try again.", 'error');
         }
     }
 });
@@ -39,31 +39,4 @@ function appendMessage(message, sender) {
     messageElement.className = sender;
     chatBox.appendChild(messageElement); // Append at the bottom
     chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
-}
-
-async function sendMessageToAPI(message) {
-    const apiUrl = 'https://yourserver.com/api/generate'; // Replace with your actual API endpoint
-
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST', // Assuming POST but adjust according to your server's API
-            headers: {
-                'Content-Type': 'application/json',
-                // Include any other headers your server requires
-            },
-            body: JSON.stringify({
-                prompt: message, // Adjust according to the expected request format of your server
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`API call failed: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data.response; // Adjust the key according to your actual API response structure
-    } catch (error) {
-        console.error('Error fetching from API:', error);
-        return "Sorry, there was an error processing your message."; // Provide a fallback message
-    }
 }
