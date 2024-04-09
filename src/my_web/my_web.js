@@ -1,18 +1,27 @@
-// Oak is a middleware framework for Deno's http server, it makes it easier to
-// write web apps in Deno.
-import { Application } from "https://deno.land/x/oak@v12.6.1/mod.ts";
+import { Application, Router } from "https://deno.land/x/oak@v12.6.1/mod.ts";
+import { gptPrompt } from "../shared/openai.ts";
+import { ask, say } from "../shared/cli.ts";
 
-// static server serves files from the public directory
-// exitSignal is used to shut down the server when the process exits (ctrl-c)
 import { createExitSignal, staticServer } from "../shared/server.ts";
 
+import { Chalk } from "npm:chalk@5";
+const chalk = new Chalk({ level: 1 });
 
-// create web server and set it up to serve static files from public
 const app = new Application();
+const router = new Router();
+
+// API routes
+router.get("/api/gpt", async (ctx) => {
+  const prompt = ctx.request.url.searchParams.get("prompt");
+  const shortPrompt = prompt.slice(0, 128);
+  const result = await gptPrompt(shortPrompt);
+  ctx.response.body = result;
+});
+
+app.use(router.routes());
+app.use(router.allowedMethods());
 app.use(staticServer);
 
-// tell the user we are about to start
-console.log("\nListening on http://localhost:8000");
+console.log(chalk.green("\nListening on http://localhost:8000"));
 
-// start the web server
 await app.listen({ port: 8000, signal: createExitSignal() });

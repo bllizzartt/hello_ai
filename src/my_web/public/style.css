@@ -94,9 +94,8 @@ main {
     justify-self: start;
 }
 
-
-/* Base state for the chat container */
-.chat-container {
+/* Base state for the chatbot container */
+.chatbot-container {
     position: fixed;
     right: 20px;
     bottom: 20px;
@@ -114,7 +113,7 @@ main {
 }
 
 /* Styles for the expanded state */
-.chat-container.chat-expanded {
+.chatbot-container.chat-expanded {
     width: 300px; /* Expanded state */
     height: 400px; /* Expanded state */
     border-radius: 15px; /* Less rounded corners for rectangle */
@@ -123,40 +122,44 @@ main {
 }
 
 /* Ensures elements are shown only in the expanded state */
-.chat-container.chat-expanded .chat-box,
-.chat-container.chat-expanded #user-input,
-.chat-container.chat-expanded #send-btn {
-    display: block;
+.chatbot-container.chat-expanded #chat-messages,
+.chatbot-container.chat-expanded .input-container,
+.chatbot-container.chat-expanded #prompt,
+.chatbot-container.chat-expanded #send {
+    display: flex; /* Make input-container flex to align children */
 }
 
-/* chat support */
-.chat-box, #user-input, #send-btn {
+/* Initially hidden in collapsed state, shown in expanded state */
+#chat-messages, .input-container, #prompt, #send {
     display: none; /* Hidden in collapsed (circle) state */
 }
 
-#chat-box {
-    width: 300px; /* Expanded state */
-    height: 400px; /* Expanded state */
-    /* flex-grow: 1;
-    overflow-y: auto; */
+#chat-messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    width: 100%; /* Ensure it fills the container */
+    height: calc(100% - 60px); /* Adjust height to leave space for input */
     background-color: #f9f9f9; /* Slightly different background */
     padding: 10px; /* Padding for content */
 }
 
-#chat-box div {
-    margin-bottom: 10px; /* Adjust as needed */
-    padding: 5px; /* Adds some padding around the text */
-    background-color: #f1f1f1; /* Light background color for visibility */
-    border-radius: 5px; /* Optional: adds rounded corners for a modern look */
+#chat-messages div {
+    margin-bottom: 10px; /* Space between messages */
+    padding: 5px; /* Padding around message text */
+    background-color: #f1f1f1; /* Light background for messages */
+    border-radius: 5px; /* Rounded corners for messages */
 }
 
-
-#user-input, #send-btn {
-    width: calc(100% - 20px); /* Adjusts width for padding */
-    margin: 10px; /* Margin around input and button */
+.input-container {
+    width: calc(100% - 20px); /* Adjust width for padding, ensuring it fits */
 }
 
-#send-btn {
+#prompt {
+    flex-grow: 1; /* Allow input to fill space */
+    margin-right: 10px; /* Space between input and send button */
+}
+
+#send {
     background-color: #0056b3;
     color: white;
     border: none;
@@ -172,3 +175,5 @@ footer {
     width: calc(100% - 250px); /* Footer width adjusted */
     margin-left: 250px; /* Aligns with the rest of the content */
 }
+
+
