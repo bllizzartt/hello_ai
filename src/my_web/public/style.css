@@ -167,6 +167,10 @@ main {
 }
 
 
+.product.active {
+    border: 2px solid blue;
+}
+
 /* Footer, also adjusted for the sidebar */
 footer {
     background-color: #f8f9fa;

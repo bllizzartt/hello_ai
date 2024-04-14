@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const userInput = document.getElementById('user-input');
     const sendButton = document.getElementById('send-btn');
     const chatBox = document.getElementById('chat-messages'); // Ensure this matches your HTML
+    
 
     // Correctly toggle chat container visibility on click, but prevent it from doing so when interacting with input or button
     chatContainer.addEventListener('click', (event) => {
