@@ -82,9 +82,10 @@
             </div>
         </main>
         
+        
         <div class="chatbot-container">
             <div id="chat-messages">
-                <!-- Chat messages will be displayed here -->
+                Chat messages will be displayed here
             </div>
             <div class="input-container">
                 <input id="prompt" type="text" placeholder="Enter message..." />
@@ -103,7 +104,37 @@
 
     
     
+
     <script>
+        const promptElement = document.getElementById("prompt");
+        const sendElement = document.getElementById("send");
+        const chatMessages = document.getElementById("chat-messages");
+    
+        sendElement.addEventListener("click", () => {
+            const message = promptElement.value;
+            displayMessage(message, 'user');
+            fetch(`/api/gpt?prompt=${encodeURIComponent(message)}`)
+            .then(response => response.text())
+            .then(text => {
+                displayMessage(text, 'bot');
+            })
+            .catch(error => {
+        console.error('Error:', error);
+        displayMessage('Sorry, there was a problem processing your request.', 'bot');
+    });
+    promptElement.value = ''; // Clear input after sending
+});
+    
+        function displayMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.textContent = message;
+            messageDiv.className = sender === 'user' ? 'user-message' : 'bot-message';
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to the bottom
+        }
+    </script>
+    
+    <!-- <script>
         const promptElement = document.getElementById("prompt");
         const sendElement = document.getElementById("send");
         sendElement.addEventListener("click", () => {
@@ -115,7 +146,7 @@
                 document.body.appendChild(responseElement);
             });
         });
-    </script>
+    </script> -->
     <script src="script.js"></script>
     <script src="onclick.js"></script>
 </body>
